@@ -10,8 +10,42 @@ http:
         referrerPolicy: no-referrer
     gzip-compress:
       compress: {}
+    cors-headers:
+      headers:
+        accessControlAllowOriginList:
+          - "https://latitudarg.com"
+          - "https://www.latitudarg.com"
+          - "https://secureapprove.com"
+          - "https://www.secureapprove.com"
+          - "http://localhost:3000"
+        accessControlAllowMethods:
+          - "GET"
+          - "POST"
+          - "PUT"
+          - "DELETE"
+          - "OPTIONS"
+        accessControlAllowHeaders:
+          - "Content-Type"
+          - "Authorization"
+          - "X-Requested-With"
+          - "Accept"
+          - "Origin"
+          - "Idempotency-Key"
+          - "X-API-TOKEN"
+        accessControlAllowCredentials: true
+        accessControlMaxAge: 86400
+    redirect-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
 
   routers:
+    # Redirige todo HTTP a HTTPS en entrypoint web
+    http-catchall:
+      rule: "HostRegexp(`{any:.+}`)"
+      entryPoints: [ "web" ]
+      middlewares: [ "redirect-https" ]
+      service: noop
     # (opcional) dashboard
     traefik-dashboard:
       entryPoints: [ "websecure" ]
@@ -19,6 +53,12 @@ http:
       service: api@internal
       middlewares: [ "default-sec-headers" ]
       tls: {}
+
+  services:
+    noop:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1"
 
 tls:
   options:
