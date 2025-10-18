@@ -66,18 +66,10 @@ tls:
       minVersion: VersionTLS12
 
   certificates:
-    # Cert para latitudarg.com (y www) usando .crt/.key
+    # Cert para latitudarg.com (y www) - rutas corregidas
     - certFile: /certs/latitudarg/latitudarg.com.crt
-      keyFile:  /certs/latitudarg/latitudarg.com.key
-      # domains:
-      #   - main: "latitudarg.com"
-      #     sans:
-      #       - "www.latitudarg.com"
+      keyFile: /certs/latitudarg/latitudarg.com.key
 
-    # Cert para secureapprove.com (y www) usando .crt/.key
+    # Cert para secureapprove.com (y www) - rutas corregidas
     - certFile: /certs/secureapprove/secureapprove.com.crt
-      keyFile:  /certs/secureapprove/secureapprove.com.key
-      # domains:
-      #   - main: "secureapprove.com"
-      #     sans:
-      #       - "www.secureapprove.com"
+      keyFile: /certs/secureapprove/secureapprove.com.key

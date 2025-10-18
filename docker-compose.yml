@@ -16,10 +16,9 @@ services:
     volumes:
       - ./dynamic.yml:/etc/traefik/dynamic.yml:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      # Directorios de certificados locales montados como sólo lectura (Windows-friendly)
-      # Coloca aquí tus .crt y .key
-      - ./certs/latitudarg:/certs/latitudarg:ro
-      - ./certs/secureapprove:/certs/secureapprove:ro
+      # Certificados corregidos a las rutas reales
+      - /etc/ssl/latitudarg:/certs/latitudarg:ro
+      - /etc/ssl/secureapprove:/certs/secureapprove:ro
     networks:
       - traefik_proxy
     restart: unless-stopped
