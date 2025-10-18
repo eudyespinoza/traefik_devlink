@@ -1,5 +1,9 @@
 http:
   middlewares:
+    redirect-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
     default-sec-headers:
       headers:
         stsSeconds: 31536000
@@ -34,10 +38,6 @@ http:
           - "X-API-TOKEN"
         accessControlAllowCredentials: true
         accessControlMaxAge: 86400
-    redirect-https:
-      redirectScheme:
-        scheme: https
-        permanent: true
 
   routers:
     # Redirige todo HTTP a HTTPS en entrypoint web
