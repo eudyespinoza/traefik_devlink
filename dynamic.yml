@@ -65,11 +65,11 @@ tls:
     default:
       minVersion: VersionTLS12
 
-  # certificates:
-    # Cert para latitudarg.com (y www) - rutas corregidas
-    # - certFile: /certs/latitudarg/latitudarg.com.crt
-    #   keyFile: /certs/latitudarg/latitudarg.com.key
+  certificates:
+    # Cert para latitudarg.com - usando nombres reales de archivos
+    - certFile: /certs/latitudarg/latitudarg.com.crt
+      keyFile: /certs/latitudarg/latitudarg.com.key
 
-    # Cert para secureapprove.com (y www) - rutas corregidas
-    # - certFile: /certs/secureapprove/secureapprove.com.crt
-    #   keyFile: /certs/secureapprove/secureapprove.com.key
+    # Cert para secureapprove.com - usando nombres reales de archivos  
+    - certFile: /certs/secureapprove/secureapprove.com.crt
+      keyFile: /certs/secureapprove/secureapprove.com.key

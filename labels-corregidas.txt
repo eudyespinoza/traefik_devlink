@@ -1,0 +1,19 @@
+# Labels corregidas para tu servicio web en el docker-compose de latitudarg
+# Copia estas labels y reemplaza las actuales en tu aplicación
+
+labels:
+  - "traefik.enable=true"
+  - "traefik.docker.network=traefik_proxy"
+
+  # Router principal por dominio
+  - "traefik.http.routers.latitudarg.rule=Host(`latitudarg.com`) || Host(`www.latitudarg.com`)"
+  - "traefik.http.routers.latitudarg.entrypoints=websecure"
+  - "traefik.http.routers.latitudarg.tls=true"
+  # NO incluir: - "traefik.http.routers.latitudarg.tls.options=default@file"
+
+  # Middlewares definidos en dynamic.yml (file provider)
+  - "traefik.http.routers.latitudarg.middlewares=default-sec-headers@file,gzip-compress@file,cors-headers@file"
+
+  # Servicio (puerto interno de la app)
+  - "traefik.http.routers.latitudarg.service=latitudarg"
+  - "traefik.http.services.latitudarg.loadbalancer.server.port=8001"
