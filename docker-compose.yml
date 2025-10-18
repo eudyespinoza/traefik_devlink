@@ -1,0 +1,31 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.filename=/etc/traefik/dynamic.yml
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --api.dashboard=true
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dynamic.yml:/etc/traefik/dynamic.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+      # Directorios de certificados del host montados como sólo lectura
+      # Ajusta estas rutas si tus certs no están en /etc/ssl del host
+      - /etc/ssl/latitudarg:/certs/latitudarg:ro
+      - /etc/ssl/secureapprove:/certs/secureapprove:ro
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+
+networks:
+  traefik_proxy:
+    external: true

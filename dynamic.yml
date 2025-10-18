@@ -1,0 +1,43 @@
+http:
+  middlewares:
+    default-sec-headers:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        frameDeny: true
+        contentTypeNosniff: true
+        referrerPolicy: no-referrer
+    gzip-compress:
+      compress: {}
+
+  routers:
+    # (opcional) dashboard
+    traefik-dashboard:
+      entryPoints: [ "websecure" ]
+      rule: Host(`proxy.tu-dominio.com`)
+      service: api@internal
+      middlewares: [ "default-sec-headers" ]
+      tls: {}
+
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
+
+  certificates:
+    # Cert para latitudarg.com (y www) usando .crt/.key
+    - certFile: /certs/latitudarg/latitudarg.com.crt
+      keyFile:  /certs/latitudarg/latitudarg.com.key
+      # domains:
+      #   - main: "latitudarg.com"
+      #     sans:
+      #       - "www.latitudarg.com"
+
+    # Cert para secureapprove.com (y www) usando .crt/.key
+    - certFile: /certs/secureapprove/secureapprove.com.crt
+      keyFile:  /certs/secureapprove/secureapprove.com.key
+      # domains:
+      #   - main: "secureapprove.com"
+      #     sans:
+      #       - "www.secureapprove.com"
