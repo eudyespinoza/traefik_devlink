@@ -4,6 +4,7 @@ http:
       redirectScheme:
         scheme: https
         permanent: true
+
     default-sec-headers:
       headers:
         stsSeconds: 31536000
@@ -12,8 +13,10 @@ http:
         frameDeny: true
         contentTypeNosniff: true
         referrerPolicy: no-referrer
+
     gzip-compress:
       compress: {}
+
     cors-headers:
       headers:
         accessControlAllowOriginList:
@@ -21,10 +24,7 @@ http:
           - "https://www.latitudarg.com"
           - "https://secureapprove.com"
           - "https://www.secureapprove.com"
-          - "https://dev.secureapprove.com"
-          - "https://api-dev.secureapprove.com"
           - "https://api.secureapprove.com"
-          - "http://localhost:3000"
         accessControlAllowMethods:
           - "GET"
           - "POST"
@@ -44,13 +44,13 @@ http:
         accessControlMaxAge: 86400
 
   routers:
-    # Redirige todo HTTP a HTTPS en entrypoint web
+    # Redirige todo HTTP a HTTPS
     http-catchall:
       rule: "HostRegexp(`{any:.+}`)"
       entryPoints: [ "web" ]
       middlewares: [ "redirect-https" ]
       service: noop
-    
+
     # Dashboard de Traefik (opcional)
     traefik-dashboard:
       entryPoints: [ "websecure" ]
@@ -59,42 +59,8 @@ http:
       middlewares: [ "default-sec-headers" ]
       tls: {}
 
-    # === SecureApprove Production Routes ===
-    secureapprove-frontend:
-      entryPoints: [ "websecure" ]
-      rule: Host(`secureapprove.com`) || Host(`www.secureapprove.com`)
-      service: secureapprove-frontend
-      middlewares: [ "default-sec-headers" ]
-      tls: {}
-
-    secureapprove-api:
-      entryPoints: [ "websecure" ]
-      rule: Host(`api.secureapprove.com`)
-      service: secureapprove-api
-      middlewares: [ "cors-headers" ]
-      tls: {}
-
-    secureapprove-grafana:
-      entryPoints: [ "websecure" ]
-      rule: Host(`grafana.secureapprove.com`)
-      service: secureapprove-grafana
-      middlewares: [ "default-sec-headers" ]
-      tls: {}
-
-    # === SecureApprove Development Routes ===
-    secureapprove-dev-frontend:
-      entryPoints: [ "websecure" ]
-      rule: Host(`dev.secureapprove.com`)
-      service: secureapprove-dev-frontend
-      middlewares: [ "default-sec-headers" ]
-      tls: {}
-
-    secureapprove-dev-api:
-      entryPoints: [ "websecure" ]
-      rule: Host(`api-dev.secureapprove.com`)
-      service: secureapprove-dev-api
-      middlewares: [ "cors-headers" ]
-      tls: {}
+    # NOTA: Los routers de SecureApprove se crean automáticamente
+    # desde los labels del docker-compose.yml
 
   services:
     noop:
@@ -102,40 +68,13 @@ http:
         servers:
           - url: "http://127.0.0.1"
 
-    # === SecureApprove Production Services ===
-    # Note: These will be auto-discovered by Docker provider
-    # when containers are running with proper labels
-    secureapprove-frontend:
-      loadBalancer:
-        servers: []  # Will be populated by Docker provider
-
-    secureapprove-api:
-      loadBalancer:
-        servers: []  # Will be populated by Docker provider
-
-    secureapprove-grafana:
-      loadBalancer:
-        servers: []  # Will be populated by Docker provider
-
-    # === SecureApprove Development Services ===
-    secureapprove-dev-frontend:
-      loadBalancer:
-        servers: []  # Will be populated by Docker provider
-
-    secureapprove-dev-api:
-      loadBalancer:
-        servers: []  # Will be populated by Docker provider
-
 tls:
   options:
     default:
       minVersion: VersionTLS12
 
   certificates:
-    # Cert para latitudarg.com - usando nombres reales de archivos
     - certFile: /certs/latitudarg/latitudarg.com.crt
       keyFile: /certs/latitudarg/latitudarg.com.key
-
-    # Cert para secureapprove.com - usando nombres reales de archivos  
     - certFile: /certs/secureapprove/secureapprove.com.crt
-      keyFile: /certs/secureapprove/secureapprove.com.key   
+      keyFile: /certs/secureapprove/secureapprove.com.key
