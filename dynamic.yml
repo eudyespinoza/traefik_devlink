@@ -25,6 +25,8 @@ http:
           - "https://secureapprove.com"
           - "https://www.secureapprove.com"
           - "https://api.secureapprove.com"
+          - "https://devlink.com.ar"
+          - "https://www.devlink.com.ar"
         accessControlAllowMethods:
           - "GET"
           - "POST"
@@ -62,6 +64,9 @@ http:
     # NOTA: Los routers de SecureApprove se crean automáticamente
     # desde los labels del docker-compose.yml
 
+    # NOTA: Los routers de DevLink se crean automáticamente
+    # desde los labels del docker-compose.yml
+
   services:
     noop:
       loadBalancer:
@@ -78,3 +83,5 @@ tls:
       keyFile: /certs/latitudarg/latitudarg.com.key
     - certFile: /certs/secureapprove/secureapprove.com.crt
       keyFile: /certs/secureapprove/secureapprove.com.key
+    - certFile: /certs/devlink/devlink.com.ar.crt
+      keyFile: /certs/devlink/devlink.com.ar.key

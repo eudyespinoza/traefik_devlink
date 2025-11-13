@@ -20,6 +20,7 @@ services:
       # Los certificados están en el host del servidor
       - /etc/ssl/latitudarg:/certs/latitudarg:ro
       - /etc/ssl/secureapprove:/certs/secureapprove:ro
+      - /etc/ssl/devlink:/certs/devlink:ro
     networks:
       - traefik_proxy
     restart: unless-stopped
