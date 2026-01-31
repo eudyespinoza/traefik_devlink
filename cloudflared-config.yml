@@ -8,7 +8,7 @@ ingress:
     originRequest:
       noTLSVerify: true
   - hostname: chatbot-api.devlink.com.ar
-    service: http://127.0.0.1:8006
+    service: http://127.0.0.1:80
     originRequest:
       noTLSVerify: true
   - service: http_status:404
