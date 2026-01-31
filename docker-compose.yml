@@ -32,8 +32,7 @@ services:
     volumes:
       - ./cloudflared-config.yml:/etc/cloudflared/config.yml:ro
       - /etc/cloudflared:/etc/cloudflared:ro
-    networks:
-      - traefik_proxy
+    network_mode: host
     restart: unless-stopped
 
 networks:

@@ -4,11 +4,19 @@ protocol: http2
  
 ingress:
   - hostname: chatbot.devlink.com.ar
-    service: http://172.27.0.3:5678
+    service: http://127.0.0.1:5678
     originRequest:
       noTLSVerify: true
   - hostname: chatbot-api.devlink.com.ar
-    service: http://localhost:80
+    service: http://127.0.0.1:8006
+    originRequest:
+      noTLSVerify: true
+  - hostname: localhost:8006
+    service: http://127.0.0.1:8006
+    originRequest:
+      noTLSVerify: true
+  - hostname: 127.0.0.1:8006
+    service: http://127.0.0.1:8006
     originRequest:
       noTLSVerify: true
   - service: http_status:404
