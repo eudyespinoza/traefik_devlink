@@ -25,6 +25,17 @@ services:
       - traefik_proxy
     restart: unless-stopped
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-tunnel
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - ./cloudflared-config.yml:/etc/cloudflared/config.yml:ro
+      - /etc/cloudflared:/etc/cloudflared:ro
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+
 networks:
   traefik_proxy:
     external: true
