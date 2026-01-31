@@ -11,12 +11,4 @@ ingress:
     service: http://127.0.0.1:8006
     originRequest:
       noTLSVerify: true
-  - hostname: localhost:8006
-    service: http://127.0.0.1:8006
-    originRequest:
-      noTLSVerify: true
-  - hostname: 127.0.0.1:8006
-    service: http://127.0.0.1:8006
-    originRequest:
-      noTLSVerify: true
   - service: http_status:404
