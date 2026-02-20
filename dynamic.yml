@@ -12,7 +12,7 @@ http:
         stsPreload: true
         frameDeny: true
         contentTypeNosniff: true
-        referrerPolicy: no-referrer
+        referrerPolicy: strict-origin-when-cross-origin
 
     gzip-compress:
       compress: {}
