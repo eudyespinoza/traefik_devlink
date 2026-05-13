@@ -116,5 +116,5 @@ tls:
       keyFile: /certs/secureapprove/secureapprove.com.key
     - certFile: /certs/devlink/devlink.com.ar.crt
       keyFile: /certs/devlink/devlink.com.ar.key
-    - certFile: /certs/kepedimos/kepedimos.com.crt
+    - certFile: /certs/kepedimos/kepedimos.com.fullchain.crt
       keyFile: /certs/kepedimos/kepedimos.com.key
