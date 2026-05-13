@@ -5,3 +5,6 @@
 .idea/inspectionProfiles/profiles_settings.xml
 certs/secureapprove/README.txt
 certs/latitudarg/README.txt
+certs/**/*.crt
+certs/**/*.key
+certs/**/*.pem
