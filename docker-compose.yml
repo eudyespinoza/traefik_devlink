@@ -21,6 +21,7 @@ services:
       - /etc/ssl/latitudarg:/certs/latitudarg:ro
       - /etc/ssl/secureapprove:/certs/secureapprove:ro
       - /etc/ssl/devlink:/certs/devlink:ro
+      - /certs/kepedimos:/certs/kepedimos:ro
     networks:
       - traefik_proxy
     restart: unless-stopped

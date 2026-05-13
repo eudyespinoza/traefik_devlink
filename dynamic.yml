@@ -17,6 +17,12 @@ http:
     gzip-compress:
       compress: {}
 
+    redirect-kepedimos-com:
+      redirectRegex:
+        regex: "^https?://(?:www\\.)?kepedimos\\.com\\.ar/(.*)"
+        replacement: "https://kepedimos.com/${1}"
+        permanent: true
+
     cors-headers:
       headers:
         accessControlAllowOriginList:
@@ -27,6 +33,7 @@ http:
           - "https://api.secureapprove.com"
           - "https://devlink.com.ar"
           - "https://www.devlink.com.ar"
+          - "https://kepedimos.com"
         accessControlAllowMethods:
           - "GET"
           - "POST"
@@ -52,6 +59,21 @@ http:
       entryPoints: [ "web" ]
       middlewares: [ "redirect-https" ]
       service: noop
+
+    kepedimos-com-ar-redirect:
+      rule: "Host(`kepedimos.com.ar`) || Host(`www.kepedimos.com.ar`)"
+      entryPoints: [ "web" ]
+      middlewares: [ "redirect-kepedimos-com" ]
+      service: noop
+      priority: 1000
+
+    kepedimos-com-ar-redirect-secure:
+      rule: "Host(`kepedimos.com.ar`) || Host(`www.kepedimos.com.ar`)"
+      entryPoints: [ "websecure" ]
+      middlewares: [ "redirect-kepedimos-com" ]
+      service: noop
+      priority: 1000
+      tls: {}
 
     # Dashboard de Traefik (opcional)
     traefik-dashboard:
@@ -85,3 +107,5 @@ tls:
       keyFile: /certs/secureapprove/secureapprove.com.key
     - certFile: /certs/devlink/devlink.com.ar.crt
       keyFile: /certs/devlink/devlink.com.ar.key
+    - certFile: /certs/kepedimos/kepedimos.com.crt
+      keyFile: /certs/kepedimos/kepedimos.com.key
