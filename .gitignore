@@ -8,3 +8,5 @@ certs/latitudarg/README.txt
 certs/**/*.crt
 certs/**/*.key
 certs/**/*.pem
+certs/kepedimos/Dominio.pdf
+certs/kepedimos/dominio2.pdf

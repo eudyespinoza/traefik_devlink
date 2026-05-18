@@ -32,6 +32,12 @@ http:
         replacement: "https://kepedimos.com/${1}"
         permanent: true
 
+    redirect-kepedimos-www:
+      redirectRegex:
+        regex: "^https?://www\\.kepedimos\\.com/(.*)"
+        replacement: "https://kepedimos.com/${1}"
+        permanent: true
+
     cors-headers:
       headers:
         accessControlAllowOriginList:
@@ -80,6 +86,21 @@ http:
       rule: "Host(`kepedimos.com.ar`) || Host(`www.kepedimos.com.ar`)"
       entryPoints: [ "websecure" ]
       middlewares: [ "redirect-kepedimos-com" ]
+      service: noop
+      priority: 1000
+      tls: {}
+
+    kepedimos-www-redirect:
+      rule: "Host(`www.kepedimos.com`)"
+      entryPoints: [ "web" ]
+      middlewares: [ "redirect-kepedimos-www" ]
+      service: noop
+      priority: 1000
+
+    kepedimos-www-redirect-secure:
+      rule: "Host(`www.kepedimos.com`)"
+      entryPoints: [ "websecure" ]
+      middlewares: [ "redirect-kepedimos-www" ]
       service: noop
       priority: 1000
       tls: {}
